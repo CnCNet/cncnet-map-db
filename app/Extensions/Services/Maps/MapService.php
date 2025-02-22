@@ -129,4 +129,53 @@ class MapService
             return $bannedMapHashes;
         }
     }
+
+    public function search(string $game, string $query, ?int $age): array {
+
+        $output = [];
+
+        $raw = false;
+
+        $handle = fopen(Storage::path($game . '/maps.txt'), "r");
+        if ($handle)
+        {
+            while (($line = fgets($handle)) !== false)
+            {
+
+                if (stripos($line, $query, 40 + 10 + 2) === false)
+                    continue;
+
+                list($sha1, $date, $name) = explode(' ', $line, 3);
+
+                if ($age > 0 && $age < 312 && intval($date) + ($age * 2592000) < time())
+                    continue;
+
+                $output[] = [
+                    'raw' => $line,
+                    'date' => date('Y-m-d H:i', $date),
+                    'sha1' => $sha1,
+                    'url' => $game . '/' . $sha1 . '.zip'
+                ];
+
+//                if ($raw)
+//                {
+//                    echo strip_tags($line);
+//                }
+//                else
+//                {
+//                    echo date('Y-m-d H:i', $date) . ' &emsp;/map ' . $sha1 . '&emsp; <A href="./' . $game . '/' . $sha1 . '.zip' . '">' .
+//                        strip_tags($name) .
+//                        '</a><br /><br />';
+//                }
+            }
+
+            fclose($handle);
+
+            return $output;
+        }
+        else
+        {
+            abort(500);
+        }
+    }
 }
