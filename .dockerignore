@@ -1,0 +1,5 @@
+vendor
+!vendor/livewire/livewire/dist/*
+node_modules
+public/build
+public/hot

@@ -25,3 +25,5 @@ yarn-error.log
 frankenphp
 frankenphp-worker.php
 /storage/framework/views
+
+**/caddy

@@ -1,0 +1,28 @@
+# documentation: https://docs.c8s.me/
+# slogan: CI but with a UI. Create continuous integration workflow seamlessly with c8s.
+# tags: c8s,workflow,automation,open,source,low,code,ui,ci,continuous,integration
+# port: 8000
+
+services:
+  cncnetmapdb:
+    image: cncnetmapdb
+    build:
+      context: .
+      dockerfile: docker/frankenphp/Dockerfile
+      target: app
+    restart: always
+    container_name: cncnetmapdb
+    env_file: ".env"
+    environment:
+      XDG_CONFIG_HOME: /app/.config
+      XDG_DATA_HOME: /app/.data
+    ports:
+      - '${APP_PORT:-80}:8000'
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+      - maps:/app/storage/app/private
+volumes:
+  caddy_data:
+  caddy_config:
+  maps:
