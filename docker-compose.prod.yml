@@ -1,8 +1,3 @@
-# documentation: https://docs.c8s.me/
-# slogan: CI but with a UI. Create continuous integration workflow seamlessly with c8s.
-# tags: c8s,workflow,automation,open,source,low,code,ui,ci,continuous,integration
-# port: 8000
-
 services:
   cncnetmapdb:
     image: cncnetmapdb
