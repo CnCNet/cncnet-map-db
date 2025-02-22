@@ -12,7 +12,7 @@ class UploadTest extends TestCase
      */
     public function test_upload_yuri_map(): void
     {
-        Storage::fake('local');
+        Storage::fake();
 
         $file = UploadedFile::fake()->createWithContent(
             '889ca47cfcbe6005eac846ed1dcd14a1eefe6fa3.zip',
@@ -25,6 +25,9 @@ class UploadTest extends TestCase
         ]);
 
         $response->assertSuccessful();
-        Storage::disk('local')->assertExists('yr/889ca47cfcbe6005eac846ed1dcd14a1eefe6fa3.zip');
+        Storage::assertExists('yr/889ca47cfcbe6005eac846ed1dcd14a1eefe6fa3.zip');
+        $mapListContent = Storage::get('yr/maps.txt');
+        $this->assertStringContainsString('889ca47cfcbe6005eac846ed1dcd14a1eefe6fa3', $mapListContent);
+
     }
 }

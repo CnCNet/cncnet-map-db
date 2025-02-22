@@ -4,16 +4,18 @@ namespace App\Extensions\Services\Maps;
 
 use App\Extensions\Repositories\Maps\MapRepositoryInterface;
 use App\Extensions\Services\Maps\MapHandler\MapHandler;
+use App\Extensions\Services\Maps\MapHandler\UploadedMap;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class MapService
 {
-    private MapRepositoryInterface $repository;
+    private MapRepositoryInterface $mapFileRepository;
 
     public function __construct(MapRepositoryInterface $repository)
     {
-        $this->repository = $repository;
+        $this->mapFileRepository = $repository;
     }
 
     public function uploadMap(string $game, UploadedFile $file) {
@@ -21,7 +23,7 @@ class MapService
         $mapSha1 = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $filepath = $game . '/' . $mapSha1 . '.zip';
 
-        if($this->repository->mapFileExists($filepath)) {
+        if($this->mapFileRepository->mapFileExists($filepath)) {
             abort(400, 'Map already exists. But Thanks anyway.');
         }
 
@@ -31,14 +33,28 @@ class MapService
 
         }
 
-        $buffer = $this->handleMap($game, $file);
+        $map = $this->handleMap($game, $file);
 
-        $this->repository->putMapFile($filepath, $buffer);
+        $this->mapFileRepository->putMapFile($filepath, $map);
 
-
+        $this->addToMapList($game, $map->getSha1(), $map->getName());
     }
 
-    private function handleMap(string $game, UploadedFile $file): string {
+    private function addToMapList($game, $sha1, $name) {
+
+        $mapListPath = $game . '/maps.txt';
+        if(isset($name)) {
+            file_put_contents(
+                Storage::path($mapListPath),
+                $sha1 . ' ' .
+                time() . ' ' .
+                strip_tags($name) . "\n",
+                FILE_APPEND | LOCK_EX
+            );
+        }
+    }
+
+    private function handleMap(string $game, UploadedFile $file): UploadedMap {
         $verifiers = config('cncnet.map_verifiers');
         $verifier = $verifiers[$game];
 

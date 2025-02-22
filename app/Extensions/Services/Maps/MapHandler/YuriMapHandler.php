@@ -6,7 +6,7 @@ use Illuminate\Http\UploadedFile;
 
 class YuriMapHandler extends MapHandler
 {
-    public function handle(UploadedFile $file): string
+    public function handle(UploadedFile $file): UploadedMap
     {
         $zip = $this->openZip($file);
 
@@ -45,6 +45,8 @@ class YuriMapHandler extends MapHandler
 
         unlink($filename);
 
-        return $zipContent;
+        $name = $this->getMapName($mapData);
+
+        return new UploadedMap($name, $zipContent, $sha1);
     }
 }

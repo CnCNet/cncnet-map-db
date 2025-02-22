@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Log;
 abstract class MapHandler
 {
 
-    public abstract function handle(UploadedFile $file): string;
+    public abstract function handle(UploadedFile $file): UploadedMap;
 
     protected function getSha1(UploadedFile $file): string {
         return pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -54,5 +54,27 @@ abstract class MapHandler
         }
 
         return $returnVal;
+    }
+
+    protected function getMapName($mapData): string | null
+    {
+        $basicPos = strpos($mapData, '[Basic]');
+        if ($basicPos !== false) {
+
+            $namePos = strpos($mapData, 'Name=', $basicPos + 5);
+            if ($namePos !== false) {
+
+                $nameEnd = strpos($mapData, "\n", $namePos);
+                if ($nameEnd !== false) {
+
+                    $mapName = substr($mapData, $namePos + 5, $nameEnd - ($namePos + 5));
+                    if ($mapName !== false && strlen($mapName) < 150) {
+
+                        return strip_tags($mapName);
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

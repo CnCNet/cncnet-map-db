@@ -2,6 +2,7 @@
 
 namespace App\Extensions\Repositories\Maps;
 
+use App\Extensions\Services\Maps\MapHandler\UploadedMap;
 use Illuminate\Support\Facades\Storage;
 
 class MapStorageRepository implements MapRepositoryInterface
@@ -11,8 +12,8 @@ class MapStorageRepository implements MapRepositoryInterface
         return Storage::exists($path);
     }
 
-    public function putMapFile(string $path, string $content)
+    public function putMapFile(string $path, UploadedMap $map)
     {
-        Storage::put($path, $content);
+        Storage::put($path, $map->getBuffer());
     }
 }
