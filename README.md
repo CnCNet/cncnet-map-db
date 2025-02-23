@@ -49,7 +49,7 @@ Here is the available endpoints.
 
 Method : POST
 ```
-/api/upload
+/upload
 ```
 
 accept a `multipart/form-data` with the following fields :
@@ -66,10 +66,11 @@ Return the following status codes :
 
 Method : GET
 ```
-/api/search
+/search
 ```
 
 Accept the following query string parameters :
 - `game` : the game abbreviation (yr, ra, ...)
 - `search` : the search text
 - `age` : (optional) the age of the map ?
+- `raw` : boolean for content raw or html
