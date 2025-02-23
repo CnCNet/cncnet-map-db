@@ -151,9 +151,11 @@ class MapService
                     continue;
 
                 $output[] = [
-                    'raw' => $line,
+                    'name' => trim($name),
+                    'game' => $game,
                     'date' => date('Y-m-d H:i', $date),
-                    'sha1' => $sha1,
+                    'hash' => $sha1,
+                    'raw' => $line,
                     'url' => $game . '/' . $sha1 . '.zip'
                 ];
 

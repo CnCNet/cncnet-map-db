@@ -25,6 +25,7 @@ class SearchMapRequest extends FormRequest
             'game' => 'required|string|in:' . join(',', config('cncnet.games')),
             'search' => 'required|string|min:3',
             'age' => 'nullable|integer|min:0',
+            'raw' => 'nullable|boolean',
         ];
     }
 }
