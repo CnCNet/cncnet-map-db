@@ -65,7 +65,7 @@ jobs:
             docker pull ghcr.io/$IMAGE_NAME:latest
             docker stop mapdb2 || true
             docker rm mapdb2 || true
-            docker run --name mapdb2 -p 3003:8000 \
+            docker run -d --name mapdb2 -p 3003:8000 \
               --volume=./maps:/app/storage/app/private \
               --volume=./caddy_config:/config \
               --volume=./data:/data \
