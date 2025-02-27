@@ -8,5 +8,7 @@ use Tests\TestCase;
 
 class SearchTest extends TestCase
 {
-
+    public function test_search() {
+        $this->markTestSkipped('todo');
+    }
 }
