@@ -60,8 +60,13 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/staging.mapdb.cncnet.org
-            docker login ghcr.io -u ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
-            docker pull ghcr.io/${{ github.repository }}:latest
+            IMAGE_NAME=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            docker pull ghcr.io/$IMAGE_NAME:latest
             docker stop mapdb2 || true
             docker rm mapdb2 || true
-            docker run --name mapdb2 -p 3003:8000 --volume=./maps:/app/storage/app/private --volume=./caddy_config:/config --volume=./data:/data ghcr.io/${{ github.repository }}:latest
+            docker run --name mapdb2 -p 3003:8000 \
+              --volume=./maps:/app/storage/app/private \
+              --volume=./caddy_config:/config \
+              --volume=./data:/data \
+              ghcr.io/$IMAGE_NAME:latest
