@@ -1,4 +1,4 @@
-# CNCNet Map DB
+# CnCNet Map DB
 
 > A Rewrite of the legacy map db.
 
@@ -74,3 +74,9 @@ Accept the following query string parameters :
 - `search` : the search text
 - `age` : (optional) the age of the map ?
 - `raw` : boolean for content raw or html
+
+
+## Sponsored by
+<a href="https://www.digitalocean.com/?refcode=337544e2ec7b&utm_campaign=Referral_Invite&utm_medium=opensource&utm_source=CnCNet" title="Powered by Digital Ocean" target="_blank">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/PoweredByDO/DO_Powered_by_Badge_blue.svg" width="201px" alt="Powered By Digital Ocean" />
+</a>
