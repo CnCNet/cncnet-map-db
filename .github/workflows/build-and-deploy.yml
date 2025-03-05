@@ -67,6 +67,7 @@ jobs:
             docker stop mapdb2 || true
             docker rm mapdb2 || true
             docker run -d --name mapdb2 -p 3003:8000 \
+              --env-file .env \
               --restart unless-stopped \
               --volume=./maps:/app/storage/app/private \
               --volume=./caddy_config:/config \
