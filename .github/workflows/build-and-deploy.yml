@@ -72,5 +72,4 @@ jobs:
               --volume=./maps:/app/storage/app/private \
               --volume=./caddy_config:/config \
               --volume=./data:/data \
-              --user="$(id -u):$(id -g)" \
               ghcr.io/$IMAGE_NAME:latest

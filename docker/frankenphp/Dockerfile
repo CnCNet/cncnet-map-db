@@ -2,7 +2,8 @@
 # Install php extensions and composer dependencies
 FROM dunglas/frankenphp:php8.4-alpine AS phpbuilder
 LABEL authors="rohsyl"
-ARG USER=www-data
+ENV USER=cncnet
+ENV UID=1000
 ENV SERVER_NAME="http://"
 
 RUN apk add --no-cache \
@@ -17,7 +18,8 @@ RUN apk add --no-cache \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp && \
+RUN adduser --uid $USER_ID -D ${USER}  && \
+    setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp && \
     chown -R ${USER}:${USER} /data/caddy /config/caddy /app && \
     chmod 775 /app
 
