@@ -44,8 +44,7 @@ RUN mkdir -p storage/framework/sessions && \
 # and run Laravel Octane to serve the app
 FROM phpbuilder AS app
 
-RUN composer dump-autoload -o && \
-    php artisan optimize
+RUN composer dump-autoload -o
 
 EXPOSE 8000
 ENTRYPOINT ["php", "/app/artisan", "octane:frankenphp"]

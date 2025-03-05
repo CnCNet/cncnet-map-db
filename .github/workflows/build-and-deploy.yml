@@ -73,3 +73,4 @@ jobs:
               --volume=./caddy_config:/config \
               --volume=./data:/data \
               ghcr.io/$IMAGE_NAME:latest
+            docker exec -it mapdb2 php artisan optimize
