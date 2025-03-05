@@ -23,6 +23,9 @@ RUN adduser --uid $UID -D ${USER}  && \
     chown -R ${USER}:${USER} /data/caddy /config/caddy /app && \
     chmod 775 /app
 
+COPY --chown=${USER}:${USER} docker/frankenphp/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
 WORKDIR /app
 USER ${USER}
 
@@ -47,5 +50,5 @@ FROM phpbuilder AS app
 RUN composer dump-autoload -o
 
 EXPOSE 8000
-ENTRYPOINT ["php", "/app/artisan", "octane:frankenphp"]
+ENTRYPOINT ["/usr/local/bin/start.sh"]
 HEALTHCHECK --start-period=5s --interval=10s --timeout=5s --retries=8 CMD php /app/artisan octane:status || exit 1
