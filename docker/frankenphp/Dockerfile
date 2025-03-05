@@ -18,7 +18,7 @@ RUN apk add --no-cache \
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN adduser --uid $USER_ID -D ${USER}  && \
+RUN adduser --uid $UID -D ${USER}  && \
     setcap CAP_NET_BIND_SERVICE=+eip /usr/local/bin/frankenphp && \
     chown -R ${USER}:${USER} /data/caddy /config/caddy /app && \
     chmod 775 /app
