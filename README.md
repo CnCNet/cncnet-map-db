@@ -11,10 +11,20 @@ Stack :
 
 ### Production
 
-**WIP**
-
+Set up the `.env file`.
 ```
-docker compose -f docker-compose.prod.yml up -d
+TODO ...
+```
+
+Run the container
+```
+docker run -d --name mapdb2 -p 3003:8000 \
+              --env-file .env \
+              --restart unless-stopped \
+              --volume=./maps:/app/storage/app/private \
+              --volume=./caddy_config:/config \
+              --volume=./data:/data \
+              ghcr.io/$IMAGE_NAME:latest
 ```
 
 ### Development
