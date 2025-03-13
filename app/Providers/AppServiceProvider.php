@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(10)->by($request->ip());
         });
 
-        if($this->app->environment('production')) {
+        if(!$this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }
