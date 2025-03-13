@@ -29,7 +29,7 @@ class SearchController extends Controller
             $out = 'Use the /map command to select or suggest the map on CnCNet (you must be inside of a game room)<br /><br /><br /><br />';
 
             foreach ($result as $map) {
-                $out .= $map['date'] . ' &emsp;/map ' . $map['hash'] . '&emsp; <A href="./' . $map['game'] . '/' . $map['hash'] . '.zip' . '">' .
+                $out .= $map['date'] . ' &emsp;/map ' . $map['hash'] . '&emsp; <a href="'.url('/').'/' . $map['game'] . '/' . $map['hash'] . '.zip' . '">' .
                     strip_tags($map['name']) .
                     '</a><br /><br />';
             }
