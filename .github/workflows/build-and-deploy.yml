@@ -71,5 +71,5 @@ jobs:
               --restart unless-stopped \
               --volume=./maps:/app/storage/app/private \
               --volume=./caddy_config:/config \
-              --volume=./data:/data \
+              --volume=./caddy_data:/data \
               ghcr.io/$IMAGE_NAME:latest
